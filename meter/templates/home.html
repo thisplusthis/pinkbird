@@ -1,0 +1,99 @@
+<html>
+
+<head>
+  <title>Pinkbird Readings</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+
+<body>
+  <h2>{{ date.year }}-{{ date.month }}-{{ date.day }} Meter Readings</h2>
+  <div style="width:75%;">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <script>
+      window.chartColors = {
+          red: 'rgb(255, 99, 132)',
+          orange: 'rgb(255, 159, 64)',
+          yellow: 'rgb(255, 205, 86)',
+          green: 'rgb(75, 192, 192)',
+          blue: 'rgb(54, 162, 235)',
+          purple: 'rgb(153, 102, 255)',
+          grey: 'rgb(201, 203, 207)'
+      };
+      var endpoint = '/meter/readings/';
+      var ctx = document.getElementById("canvas").getContext('2d');
+
+      function makeChart(data) {
+          var config = {
+              data: {
+                  datasets: [{
+                      type: 'line',
+                      label: 'Temperature',
+                      fill: false,
+                      backgroundColor: window.chartColors.red,
+                      borderColor: window.chartColors.red,
+                      data: data.temperature,
+                      order: 2
+                  }, {
+                      type: 'line',
+                      label: 'Humidity',
+                      fill: false,
+                      backgroundColor: window.chartColors.blue,
+                      borderColor: window.chartColors.blue,
+                      data: data.humidity,
+                      order: 3
+                  }, {
+                      type: 'line',
+                      label: 'Fan',
+                      data: data.fan,
+                      backgroundColor: 'rgba(75, 192, 192, 0.3)',
+                      borderColor: 'rgba(75, 192, 192, 0.5)',
+                      order: 1,
+                  }],
+                  labels: data.labels
+              },
+              options: {
+                  responsive: true,
+                  scales: {
+                      xAxes: [{
+                          display: true,
+                          scaleLabel: {
+                              display: true,
+                              labelString: 'Time'
+                          }
+                      }],
+                      yAxes: [{
+                          display: true,
+                          scaleLabel: {
+                              display: true,
+                              labelString: 'Value'
+                          },
+                          ticks: {
+                              min: 0,
+                              max: 100,
+                              stepSize: 5
+                          }
+                      }]
+                  }
+              }
+          };
+          new Chart(ctx, config);
+      }
+
+      function readData() {
+          $.ajax({
+              method: "GET",
+              url: endpoint,
+              success: function (data) {
+                  makeChart(data);
+              }
+          });
+      }
+
+      readData();
+
+  </script>
+</body>
+</html>
