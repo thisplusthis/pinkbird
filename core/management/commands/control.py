@@ -28,9 +28,9 @@ PIN_LOOKUPS = {
 
 
 class Command(BaseCommand):
-    help = 'Displays current time'
+    help = """Get readings from DHT-22 and log them to the django database"""
 
-    def setup(self):
+    def setup_gpio(self):
         """
         Setup relay pins
         """
@@ -68,7 +68,7 @@ class Command(BaseCommand):
             self.toggle_relay(False)
 
     def handle(self, *args, **kwargs):
-        self.setup()
+        self.setup_gpio()
         while True:
             humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
             self.log_readings(humidity, temperature)

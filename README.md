@@ -1,9 +1,15 @@
 # Raspberry Pi Humidity / Temperature control with Django Dashboard
 
-## Requirements
+## Hardware Requirements
 
-- DHT22 Sensor
 - Raspberry PI Zero W
+- DHT22 Sensor
+- 4 Channel Relay Module
+- Basic AC Powered Computer Fan
+
+## Raspberry PI Setup
+
+    TODO
 
 
 ## Python / Django setup
@@ -25,4 +31,3 @@
 
 #### Start the Django Server
     ./manage.py runserver 0.0.0.0:80  
-
