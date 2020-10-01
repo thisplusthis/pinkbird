@@ -1,10 +1,28 @@
-# Raspberry Pi Humidity / Temp control with Django Dashboard
+# Raspberry Pi Humidity / Temperature control with Django Dashboard
 
-## Install  
+## Requirements
 
-1. `pip install -r requirements.txt`  
+- DHT22 Sensor
+- Raspberry PI Zero W
 
-2. `./manage.py migrate`  
 
-3. `./manage.py runserver 0.0.0.0:80`  
+## Python / Django setup
+
+#### Create a virtualenv  
+    python3 -m venv ~/.virtualenvs/pinkbird
+
+#### Add Secret Key to environment
+    echo 'export SECRET_KEY="unique to you"' >> ~/.virtualenvs/pinkbird/bin/activate
+
+#### Source into virtualenv
+    source ~/.virtualenvs/pinkbird/bin/activate
+
+#### Install python requirements
+    pip install -r requirements.txt  
+
+#### Run migrations 
+    ./manage.py migrate  
+
+#### Start the Django Server
+    ./manage.py runserver 0.0.0.0:80  
 
