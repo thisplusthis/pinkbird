@@ -19,14 +19,13 @@ class ReadingsChartData(APIView):
         humidity = []
         fan = []
 
-        date_from = localtime().replace(hour=0, minute=0, second=0, microsecond=0) - datetime.timedelta(minutes=10)
+        date_from = localtime().replace(hour=0, minute=0, second=0, microsecond=0) - datetime.timedelta(minutes=60)
         for reading in Reading.objects.filter(date__gte=date_from).order_by('date'):
             dates.append(reading.date.strftime("%H:%M:%S"))
             temperature.append(reading.temperature)
             humidity.append(reading.humidity)
             fan.append(50 if reading.fan else 0)
 
-        print(dates)
         return Response(
             dict(
                 labels=dates,
